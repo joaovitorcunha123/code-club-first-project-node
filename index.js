@@ -47,12 +47,21 @@ app.get('/users',  (request, response) => {
 
 
 app.post('/users', (request, response) => {
+    try{
     const { name, age } = request.body;
+    // Para jogar um novo erro fazemos da seguinte maneira
+    // if(age < 18) throw new Error()
  
     const user = { id:uuid.v4(), name, age } // id:uuid.v4(): Isso vai gerar um id único
 
     users.push(user)// push adiciona valores em um array
     return response.status(201).json(user)
+    } catch(err){
+        return response.status(500).json({error: "error not found"})
+    } finally {
+        // O finally, ele é opcional
+        console.log('termino tudo')
+    }
 });
 
 
